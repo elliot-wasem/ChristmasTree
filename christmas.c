@@ -144,28 +144,51 @@ void draw_tree() {
   printw("*****");
   row++;
 
-  while(col > 3) {
-    move(max_y - row, max_x / 2 - col);
-    print_point(stars);
-    col-= 2;
-    row++;
-    stars -= 4;
+  int cur_y = 0;
+  getmaxyx(stdscr, cur_y, max_x);
 
-    move(max_y - row, max_x / 2 - col);
-    print_point(stars);
-    col -= 2;
-    row++;
-    stars -= 4;
+  if(cur_y < 32 || max_x <= 42) {
+    stars = 21;
+    col = 10;
+    while(col >= 0) {
+      move(max_y - row, max_x / 2 - col);
+      print_point(stars);
+      col--;
+      row++;
+      stars -= 2;
+    }
+  } else if(cur_y < 38) {
+    while(col >= 0) {
+      move(max_y - row, max_x / 2 - col);
+      print_point(stars);
+      col--;
+      row++;
+      stars -= 2;
+    }
+  } else {
+    while(col > 3) {
+      move(max_y - row, max_x / 2 - col);
+      print_point(stars);
+      col-= 2;
+      row++;
+      stars -= 4;
 
-    move(max_y - row, max_x / 2 - col);
-    print_point(stars);
-    col += 2;
-    row++;
-    stars += 4;
+      move(max_y - row, max_x / 2 - col);
+      print_point(stars);
+      col -= 2;
+      row++;
+      stars -= 4;
+
+      move(max_y - row, max_x / 2 - col);
+      print_point(stars);
+      col += 2;
+      row++;
+      stars += 4;
+    }
+    move(max_y - row, max_x / 2);
+    print_point(1);
+    move(0, 0);
   }
-  move(max_y - row, max_x / 2);
-  print_point(1);
-  move(0, 0);
 }
 
 void print_point(int num_reps) {
