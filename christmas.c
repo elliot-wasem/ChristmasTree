@@ -9,10 +9,6 @@
 
 void draw_tree();
 void print_point();
-struct point {
-  int y;
-  int x;
-};
 
 int main() {
   initscr();
