@@ -14,4 +14,4 @@ Just a little bit of code I threw together christmas morning 2018. Give it a sho
 
 ## Compiling
 
-Run following: `gcc -o christmas christmas.c -lncurses`
+Run following: `gcc -o christmas christmas.c -lncurses`, or just use the makefile.
