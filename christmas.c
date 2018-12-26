@@ -9,6 +9,11 @@
 
 void draw_tree();
 void print_point();
+void draw_snowflakes();
+
+struct flake {
+  int y, x;
+};
 
 int main() {
   initscr();
@@ -24,9 +29,33 @@ int main() {
 
   char c = '0';
 
+  int max_y, max_x;
+
+  getmaxyx(stdscr, max_y, max_x);
+  struct flake flakes1[max_x];
+  struct flake flakes2[max_x];
+  struct flake flakes3[max_x];
+  
+  for(int i = 0; i < max_x; i++) {
+    flakes1[i].x = i;
+    flakes1[i].y = rand() % max_y - 5;
+  }
+  for(int i = 0; i < max_x; i++) {
+    flakes2[i].x = i;
+    flakes2[i].y = rand() % max_y - 5;
+  }
+
+  for(int i = 0; i < max_x; i++) {
+    flakes3[i].x = i;
+    flakes3[i].y = rand() % max_y - 5;
+  }
+  int reset_index = rand() % max_x;
   while(c != 'q'){
+    
     erase();
+    draw_snowflakes(flakes1, max_x, reset_index);
     draw_tree();
+    reset_index = rand() % max_x;
     refresh();
     //fflush(stdout);
     c = getch();
@@ -205,4 +234,16 @@ void print_point(int num_reps) {
   attroff(COLOR_PAIR(color + 1));
   if(num_reps > 1)
     print_point(num_reps - 1);
+}
+
+void draw_snowflakes(struct flake flakes[], int len, int reset_index) {
+  int i = 0;
+  int max_y = 0, max_x = 0;
+  getmaxyx(stdscr, max_y, max_x);
+  for(int i = 0; i < len; i++) {
+    mvprintw(flakes[i].y, flakes[i].x, "*");
+    if(flakes[i].y < max_y - 5)
+      flakes[i].y++;
+  }
+  flakes[reset_index].y = 0;
 }
