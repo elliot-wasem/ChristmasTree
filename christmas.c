@@ -1,26 +1,54 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <ncurses.h>
+#include <string.h>
 
 #define GREEN  1
 #define RED    2
 #define BLUE   3
 #define YELLOW 4
 #define WHITE  5
+#define USAGE  "Usage: christmas [options]\n\noptions:\n\t-t/--time <time> -- time in milliseconds between each tick of the program. Default 150\n"
 
 void draw_tree();
 void print_point();
+void print_point_large();
 void draw_snowflakes();
 
 struct flake {
   int y, x;
 };
 
-int main() {
+int main(int argc, char* argv[]) {
+  int time = 150;
+
+  if(argc % 2 != 1) {
+    printf(USAGE);
+    return -1;
+  }
+  for(int i = 0; i < argc; i++) {
+    if(!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+      printf(USAGE);
+      return 0;
+    } else if (!strcmp(argv[i], "-t") || !strcmp(argv[i], "--time")) {
+      if(argv[i + 1] == NULL) {
+	printf("Bad argument NULL for option %s", argv[i]);
+	return -1;
+      }
+      int temp = atoi(argv[i + 1]);
+      if(!temp) {
+	printf("Bad argument %s for option %s\n", argv[i + 1], argv[i]);
+	return -1;
+      }
+      time = temp;
+    }
+  }
+
   initscr();
   start_color();
   refresh();
   noecho();
-  timeout(150);
+  timeout(time);
   init_pair(1, COLOR_GREEN, COLOR_BLACK);
   init_pair(2, COLOR_RED, COLOR_BLACK);
   init_pair(3, COLOR_BLUE, COLOR_BLACK);
@@ -72,7 +100,7 @@ void draw_tree() {
   col = 21;
   stars = 43;
   move(max_y - row, max_x / 2 - 8);
-  printw("Press q to quit");
+  printw("> Press q to quit <");
   row += 3;
   attron(COLOR_PAIR(GREEN));
   move(max_y - row, max_x / 2 - 2);
@@ -197,19 +225,19 @@ void draw_tree() {
   } else {
     while(col > 3) {
       move(max_y - row, max_x / 2 - col);
-      print_point(stars);
+      print_point_large(stars);
       col-= 2;
       row++;
       stars -= 4;
 
       move(max_y - row, max_x / 2 - col);
-      print_point(stars);
+      print_point_large(stars);
       col -= 2;
       row++;
       stars -= 4;
 
       move(max_y - row, max_x / 2 - col);
-      print_point(stars);
+      print_point_large(stars);
       col += 2;
       row++;
       stars += 4;
@@ -234,6 +262,22 @@ void print_point(int num_reps) {
   attroff(COLOR_PAIR(color + 1));
   if(num_reps > 1)
     print_point(num_reps - 1);
+}
+
+void print_point_large(int num_reps) {
+  int color = rand() % 4 + 2;
+  if(!((num_reps + 2) % 6)) {
+    attron(COLOR_PAIR(color));
+    printw("o");
+    attroff(COLOR_PAIR(color));
+  } else {
+    color = 1;
+    attron(COLOR_PAIR(color));
+    printw("*");
+    attroff(COLOR_PAIR(color));
+  }
+  if(num_reps > 1)
+    print_point_large(num_reps - 1);
 }
 
 void draw_snowflakes(struct flake flakes[], int len, int reset_index) {
