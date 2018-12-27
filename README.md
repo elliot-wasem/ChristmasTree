@@ -7,7 +7,7 @@ Just a little bit of code I threw together christmas morning 2018. Give it a sho
 ### Ubuntu:
 `libncurses5-dev`
 
-`libncurses5w-dev`
+`libncursesw5-dev`
 
 ### Arch:
 `ncurses`
