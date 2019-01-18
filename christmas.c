@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
       }
       int temp = atoi(argv[i + 1]);
       if(!temp) {
-	printf("Bad argument \"%s\" for option \"%s\".\nOption \"%s\" must have a valid integer argument immediately following it.\n", argv[i + 1], argv[i]);
+	printf("Bad argument \"%s\" for option \"%s\".\nOption \"%s\" must have a valid integer argument immediately following it.\n", argv[i + 1], argv[i], argv[i]);
 	return -1;
       }
       time = temp;
