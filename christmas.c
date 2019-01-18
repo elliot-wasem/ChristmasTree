@@ -365,7 +365,6 @@ void print_point_large(int num_reps) {
 }
 
 void draw_snowflakes(struct flake flakes[], int len, int reset_index) {
-  int i = 0;
   int max_y = 0, max_x = 0;
   getmaxyx(stdscr, max_y, max_x);
   for(int i = 0; i < len; i++) {
