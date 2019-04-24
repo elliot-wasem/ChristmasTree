@@ -16,6 +16,7 @@
 #define BLUE   3
 #define YELLOW 4
 #define WHITE  5
+#define NEEDLE_CHAR "^"
 
 // usage message, for ease of use, so that it is uniform whenever produced
 #define USAGE  "\nUsage: christmas [options]\n\noptions:\n\t-t/--time <time> -- time in milliseconds between each tick of the program. Default 150\n"
@@ -340,7 +341,7 @@ void print_point(int num_reps) {
   if(color)
     printw("o");
   else
-    printw("*");
+    printw(NEEDLE_CHAR);
   attroff(COLOR_PAIR(color + 1));
   if(num_reps > 1)
     print_point(num_reps - 1);
@@ -357,7 +358,7 @@ void print_point_large(int num_reps) {
   } else {
     color = 1;
     attron(COLOR_PAIR(color));
-    printw("*");
+    printw(NEEDLE_CHAR);
     attroff(COLOR_PAIR(color));
   }
   if(num_reps > 1)
@@ -368,7 +369,8 @@ void draw_snowflakes(struct flake flakes[], int len, int reset_index) {
   int max_y = 0, max_x = 0;
   getmaxyx(stdscr, max_y, max_x);
   for(int i = 0; i < len; i++) {
-    mvprintw(flakes[i].y, flakes[i].x, "*");
+      int random = rand() % 3;
+      mvprintw(flakes[i].y, flakes[i].x, (random == 2 ? "*" : (random == 1 ? "+" : "x")));
     if(flakes[i].y < max_y - 5)
       flakes[i].y++;
   }
