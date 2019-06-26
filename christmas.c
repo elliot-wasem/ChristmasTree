@@ -6,6 +6,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <ncurses.h>
 #include <string.h>
 
@@ -67,6 +68,17 @@ int main(int argc, char* argv[]) {
       return -1;
     }
   }
+  /* int flag; */
+  /* while((flag = getopt(argc, argv, "t")) != -1) { */
+  /*     switch(flag) { */
+  /*     case 't': */
+  /* 	  printf("%s", optarg); */
+  /* 	  time = atoi(optarg); */
+  /* 	  break; */
+  /*     default: */
+  /* 	  printf("Bad argument %d\n\t%s\n", flag, USAGE); */
+  /*     } */
+  /* } */
 
   // initialize screen
   initscr();
