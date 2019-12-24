@@ -181,7 +181,7 @@ void draw_tree() {
   stars = 43;
 
   // from here to the 'if' statement, we are just drawing out the trunk and presents. mostly just hardcoding.
-  move(max_y - row, max_x / 2 - 8);
+  move(max_y - row - 1, max_x / 2 - 8);
   // this method prints a string to the window. like 'printf()' but prints to stdscr
   printw("> Press q to quit <");
   row += 3;
@@ -337,6 +337,8 @@ void draw_tree() {
     print_point(1);
     move(0, 0);
   }
+  move(max_y+4, max_x / 2 - 18);
+  printw("github.com/elliot-wasem/ChristmasTree");
 }
 
 // recursive function to print points from start position onward until num_reps is depleted
